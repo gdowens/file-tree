@@ -31,6 +31,9 @@ export default class extends Component {
     super()
 
     this.handleClick = this.handleEvent.bind(this, 'onClick')
+    this.handleDoubleClick = this.handleEvent.bind(this, 'onDoubleClick')
+    this.handleMouseEnter = this.handleEvent.bind(this, 'onMouseEnter')
+    this.handleMouseLeave = this.handleEvent.bind(this, 'onMouseLeave')
     this.handleKeyUp = this.handleEvent.bind(this, 'onKeyUp')
     this.handleKeyDown = this.handleEvent.bind(this, 'onKeyDown')
     this.handleContextMenu = this.handleEvent.bind(this, 'onContextMenu')
@@ -101,6 +104,9 @@ export default class extends Component {
       <div style={styles.nodeContainer}
         tabIndex={'0'}
         onClick={this.handleClick.bind(this, node, nodeMetadata, index)}
+        onDoubleClick={this.handleDoubleClick.bind(this, node, nodeMetadata, index)}
+        onMouseEnter={this.handleMouseEnter.bind(this, node, nodeMetadata, index)}
+        onMouseLeave={this.handleMouseLeave.bind(this, node, nodeMetadata, index)}
         onKeyUp={this.handleKeyUp.bind(this, node, nodeMetadata, index)}
         onKeyDown={this.handleKeyDown.bind(this, node, nodeMetadata, index)}
         onContextMenu={this.handleContextMenu.bind(this, node, nodeMetadata, index)}

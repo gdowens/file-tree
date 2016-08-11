@@ -162,15 +162,32 @@ class Tree extends EventEmitter {
     const item = this.remove(oldPath)
 
     if (item) {
+      this.moveMetadata(oldPath, newPath)
       this.add(newPath, item)
 
       // Update names and paths of children
       traverse(item, (child, childPath) => {
         const basePath = path.basename(childPath)
+        const oldChildPath = child.path
         child.name = basePath
         child.path = childPath
+
+        // a bit of duplication
+        // we want the directories metadata to be present on the first noticeable "change" event
+        if (childPath != newPath) {
+          this.moveMetadata(oldChildPath, childPath)
+        }
       })
     }
+
+    this.emitChange()
+  }
+  moveMetadata(oldPath, newPath) {
+    const metadataCopy = {
+      ...this._state.metadata[oldPath],
+    }
+    delete this._state.metadata[oldPath]
+    this._state.metadata[newPath] = metadataCopy
   }
   setMetadataField(itemPath, field, value) {
     let metadata = this._state.metadata[itemPath]
