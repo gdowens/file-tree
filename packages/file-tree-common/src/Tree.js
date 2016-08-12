@@ -147,6 +147,7 @@ class Tree extends EventEmitter {
     const basePath = path.basename(itemPath)
     const item = parent.children[basePath]
     delete parent.children[basePath]
+    this.deleteMetadata(itemPath)
 
     this.emitChange()
 
@@ -181,6 +182,9 @@ class Tree extends EventEmitter {
     }
 
     this.emitChange()
+  }
+  deleteMetadata(itemPath) {
+    delete this._state.metadata[itemPath]
   }
   moveMetadata(oldPath, newPath) {
     const metadataCopy = {

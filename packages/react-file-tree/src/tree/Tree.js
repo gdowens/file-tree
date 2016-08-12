@@ -111,13 +111,15 @@ export default class extends Component {
         onKeyDown={this.handleKeyDown.bind(this, node, nodeMetadata, index)}
         onContextMenu={this.handleContextMenu.bind(this, node, nodeMetadata, index)}
       >
-        <NodeComponent
-          key={path}
-          node={node}
-          metadata={nodeMetadata}
-          depth={depth}
-          index={index}
-        />
+        {
+          React.cloneElement(NodeComponent, {
+            key: path,
+            node,
+            metadata: nodeMetadata,
+            depth,
+            index,
+          })
+        }
       </div>
     )
   }
