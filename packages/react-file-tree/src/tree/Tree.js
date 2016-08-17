@@ -24,7 +24,9 @@ export default class extends Component {
   static defaultProps = {
     plugins: [],
     nodeHeight: 40,
-    NodeComponent: DefaultNode,
+    renderNode: function(props) {
+      <DefaultNode {...props}/>
+    },
   }
 
   constructor(props) {
@@ -94,7 +96,7 @@ export default class extends Component {
   }
 
   renderNode({index}) {
-    const {NodeComponent} = this.props
+    const {renderNode} = this.props
     const {metadata, indexCache} = this.state
     const {node, depth} = indexCache[index]
     const {path} = node
@@ -112,14 +114,14 @@ export default class extends Component {
         onContextMenu={this.handleContextMenu.bind(this, node, nodeMetadata, index)}
       >
         {
-          React.cloneElement(NodeComponent, {
+          renderNode({
             key: path,
             node,
             metadata: nodeMetadata,
             depth,
             index,
-          })
-        }
+          }
+        )}
       </div>
     )
   }
